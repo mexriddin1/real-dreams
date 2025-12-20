@@ -9,7 +9,7 @@ export const createBooking = async (model: Booking): Promise<boolean> => {
         console.log("model:", model);
 
         const {data} = await axios.post<ApiResponse<string>>(
-            `${BASE_URL}/bookings`,
+            `https://ea61b9b2b725.ngrok-free.app/bookings`,
             model,
             {
                 validateStatus: () => true,

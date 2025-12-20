@@ -7,7 +7,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 export const getAllCars = async (page = 1, page_size = 10): Promise<PaginatedData<Car> | null> => {
     try {
         const { data } = await axios.get<ApiResponse<PaginatedData<Car>>>(
-            `${BASE_URL}/cars?page=${page}&page_size=${page_size}`,
+            `https://ea61b9b2b725.ngrok-free.app/cars?page=${page}&page_size=${page_size}`,
             {
                 validateStatus: () => true,
                 headers: {
@@ -27,7 +27,7 @@ export const getAllCars = async (page = 1, page_size = 10): Promise<PaginatedDat
 export const getTopCars = async (): Promise<Car[]> => {
     try {
         const { data } = await axios.get<ApiResponse<Car[]>>(
-            `${BASE_URL}/cars/top`,
+            `https://ea61b9b2b725.ngrok-free.app/cars/top`,
             {
                 validateStatus: () => true,
                 headers: {
@@ -49,7 +49,7 @@ export const createBooking = async (model: CarBooking): Promise<boolean> => {
         console.log("model:", model);
 
         const { data } = await axios.post<ApiResponse<string>>(
-            `${BASE_URL}/car-bookings`,
+            `https://ea61b9b2b725.ngrok-free.app/car-bookings`,
             model,
             {
                 validateStatus: () => true,
