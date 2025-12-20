@@ -18,7 +18,8 @@ import {
   CustomTabsTrigger,
 } from "@/components/ui/custom-tabs";
 import { PaginatedData, Tour } from "@/network/model";
-import { useSearchParams } from "next/navigation";
+// we read search params from `window.location.search` on the client to avoid
+// `useSearchParams` SSR suspense issues during static prerender
 import Footer from "@/components/shared/footer";
 
 const Page = () => {
@@ -26,10 +27,7 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { t } = useGlobalContext();
-  const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState<string>(
-    searchParams?.get("show") === "second" ? "second" : "first"
-  );
+  const [activeTab, setActiveTab] = useState<string>("first");
   const [cars, setCars] = useState<Car[]>([]);
   const [carsLoading, setCarsLoading] = useState(false);
   const [searchLocation, setSearchLocation] = useState("");
@@ -44,9 +42,18 @@ const Page = () => {
   useEffect(() => {
     let mounted = true;
 
-    const address = searchParams?.get("address");
-    const start = searchParams?.get("start");
-    const people = searchParams?.get("people");
+    // read URL params from window on client mount
+    const params =
+      typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search)
+        : new URLSearchParams();
+    const address = params.get("address");
+    const start = params.get("start");
+    const people = params.get("people");
+
+    // set active tab from `show` param if present
+    const show = params.get("show");
+    if (show === "second") setActiveTab("second");
 
     setLoading(true);
     setError(null);
@@ -77,7 +84,7 @@ const Page = () => {
     return () => {
       mounted = false;
     };
-  }, [searchParams]);
+  }, []);
 
   // detect which tab is first in the DOM and store preference
   // detect which tab is first in the DOM and store preference (runs once)
