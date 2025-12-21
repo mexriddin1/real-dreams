@@ -26,7 +26,7 @@ export const galAllTours = async (page = 1, page_size = 10): Promise<PaginatedDa
 export const findById = async (id: number): Promise<ApiResponse<Tour>> => {
     try {
         const { data } = await axios.get<ApiResponse<Tour>>(
-            `${BASE_URL}/tours/${id}`,
+            `/api/tours/${id}`,
             {
                 validateStatus: () => true,
                 headers: {
@@ -46,7 +46,7 @@ export const findById = async (id: number): Promise<ApiResponse<Tour>> => {
 export const getTopTours = async (): Promise<Tour[]> => {
     try {
         const { data } = await axios.get<ApiResponse<Tour[]>>(
-            `${BASE_URL}/tours/top`,
+            `/api/tours/top`,
             {
                 validateStatus: () => true,
                 headers: {
