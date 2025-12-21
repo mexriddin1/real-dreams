@@ -2,12 +2,14 @@ import axios from "axios";
 import { ApiResponse, PaginatedData } from "../model";
 import { Car, CarBooking } from "../model/car";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://185.191.141.85:8080";
+// const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://185.191.141.85:8080";
+
+
 
 export const getAllCars = async (page = 1, page_size = 10): Promise<PaginatedData<Car> | null> => {
     try {
         const { data } = await axios.get<ApiResponse<PaginatedData<Car>>>(
-            `${BASE_URL}/cars?page=${page}&page_size=${page_size}`,
+            `/cars?page=${page}&page_size=${page_size}`,
             {
                 validateStatus: () => true,
                 headers: {
@@ -27,7 +29,7 @@ export const getAllCars = async (page = 1, page_size = 10): Promise<PaginatedDat
 export const getTopCars = async (): Promise<Car[]> => {
     try {
         const { data } = await axios.get<ApiResponse<Car[]>>(
-            `${BASE_URL}/cars/top`,
+            `/cars/top`,
             {
                 validateStatus: () => true,
                 headers: {
@@ -48,7 +50,7 @@ export const createBooking = async (model: CarBooking): Promise<boolean> => {
     try {
 
         const { data } = await axios.post<ApiResponse<string>>(
-            `${BASE_URL}/car-bookings`,
+            `/car-bookings`,
             model,
             {
                 validateStatus: () => true,
@@ -88,7 +90,7 @@ export const findCars = async (params: {
         qs.append("min_price", String(min_price));
         qs.append("max_price", String(max_price));
 
-        const url = `${BASE_URL}/cars/find?${qs.toString()}`;
+        const url = `/cars/find?${qs.toString()}`;
 
         const { data } = await axios.get<ApiResponse<Car[]>>(url, {
             validateStatus: () => true,

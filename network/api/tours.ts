@@ -6,7 +6,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://185.191.141.85:8080
 export const galAllTours = async (page = 1, page_size = 10): Promise<PaginatedData<Tour> | null> => {
     try {
         const { data } = await axios.get<ApiResponse<PaginatedData<Tour>>>(
-            `${BASE_URL}/tours?page=${page}&page_size=${page_size}`,
+            `/tours?page=${page}&page_size=${page_size}`,
             {
                 validateStatus: () => true,
                 headers: {
@@ -90,7 +90,7 @@ export const findTours = async (params: {
         qs.append("end", String(end));
         qs.append("people", String(people));
 
-        const url = `${BASE_URL}/tours/find?${qs.toString()}`;
+        const url = `/tours/find?${qs.toString()}`;
 
         const { data } = await axios.get<ApiResponse<Tour[]>>(url, {
             validateStatus: () => true,

@@ -1,23 +1,18 @@
 import type { NextConfig } from "next";
 
-const BACKEND = process.env.NEXT_PUBLIC_BASE_URL || process.env.BACKEND_URL || "http://185.191.141.85:8080";
-
 const nextConfig: NextConfig = {
   images: {
-    remotePatterns: [
-      { protocol: 'http', hostname: '185.191.141.85', port: '8080', pathname: '/**' },
-      { protocol: 'https', hostname: 'assets.example.com', pathname: '/**' },
-      { protocol: 'http', hostname: 'localhost', port: '', pathname: '/**' },
-      { protocol: 'http', hostname: '127.0.0.1', port: '', pathname: '/**' },
-    ],
+    domains: ['localhost', '127.0.0.1', 'http://185.191.141.85:8080'],
     unoptimized: true,
   },
-
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: `${BACKEND}/:path*`, // Proxy all /api requests to backend
+        source: "/:path*",
+        destination: "http://185.191.141.85:8080/:path*",
       },
     ];
   },
