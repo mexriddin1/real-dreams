@@ -2,8 +2,10 @@ import { NextResponse } from "next/server";
 
 const BACKEND = process.env.NEXT_PUBLIC_BASE_URL || process.env.BACKEND_URL || "http://185.191.141.85:8080";
 
-export async function GET(_req: Request, { params }: { params: { id: string } }) {
-    const { id } = params || {};
+export async function GET(_req: Request, context: { params: any }) {
+    // `context.params` may be a Promise in some Next versions — await to be safe
+    const params = await (context?.params ?? {});
+    const id = params?.id;
     if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
 
     try {
