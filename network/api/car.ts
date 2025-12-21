@@ -2,7 +2,7 @@ import axios from "axios";
 import { ApiResponse, PaginatedData } from "../model";
 import { Car, CarBooking } from "../model/car";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://946d3a41929e.ngrok-free.app";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://185.191.141.85:8080";
 
 export const getAllCars = async (page = 1, page_size = 10): Promise<PaginatedData<Car> | null> => {
     try {

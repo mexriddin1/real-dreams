@@ -2,7 +2,7 @@ import {ApiResponse} from '../model';
 import axios from "axios";
 import {Booking} from "@/network/model/booking";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://946d3a41929e.ngrok-free.app";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://185.191.141.85:8080";
 
 export const createBooking = async (model: Booking): Promise<boolean> => {
     try {

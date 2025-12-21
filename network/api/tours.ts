@@ -1,7 +1,7 @@
 import { Tour, PaginatedData, ApiResponse } from '../model';
 import axios from "axios";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://946d3a41929e.ngrok-free.app";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://185.191.141.85:8080";
 
 export const galAllTours = async (page = 1, page_size = 10): Promise<PaginatedData<Tour> | null> => {
     try {
