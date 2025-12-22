@@ -438,80 +438,140 @@ const Page = () => {
             </TabsContent>
 
             <TabsContent value="second">
+              {/*<div className="grid p-4 grid-cols-1 md:grid-cols-4 gap-4 w-full bg-primary rounded-br-xl rounded-tr-xl rounded-bl-xl">*/}
+              {/*  <div className="flex flex-col gap-2">*/}
+              {/*    <span className="text-white text-start text-sm">*/}
+              {/*      {t("location")}*/}
+              {/*    </span>*/}
+              {/*    <input*/}
+              {/*      type="text"*/}
+              {/*      value={searchLocation}*/}
+              {/*      onChange={(e) => setSearchLocation(e.target.value)}*/}
+              {/*      placeholder={t("location")}*/}
+              {/*      className="border p-3 rounded-xl w-full bg-white text-sm"*/}
+              {/*    />*/}
+              {/*  </div>*/}
+
+              {/*  <div className="flex flex-col gap-2">*/}
+              {/*    <span className="text-white text-start text-sm">*/}
+              {/*      {t("min_price_label")}*/}
+              {/*    </span>*/}
+              {/*    <input*/}
+              {/*      type="number"*/}
+              {/*      min={0}*/}
+              {/*      value={minPrice}*/}
+              {/*      onChange={(e) =>*/}
+              {/*        setMinPrice(*/}
+              {/*          e.target.value === "" ? "" : Number(e.target.value)*/}
+              {/*        )*/}
+              {/*      }*/}
+              {/*      placeholder={t("min_placeholder")}*/}
+              {/*      className="border p-3 rounded-xl bg-white text-sm"*/}
+              {/*    />*/}
+              {/*  </div>*/}
+
+              {/*  <div className="flex flex-col gap-2">*/}
+              {/*    <span className="text-white text-start text-sm">*/}
+              {/*      {t("max_price_label")}*/}
+              {/*    </span>*/}
+              {/*    <input*/}
+              {/*      type="number"*/}
+              {/*      min={0}*/}
+              {/*      value={maxPrice}*/}
+              {/*      onChange={(e) =>*/}
+              {/*        setMaxPrice(*/}
+              {/*          e.target.value === "" ? "" : Number(e.target.value)*/}
+              {/*        )*/}
+              {/*      }*/}
+              {/*      placeholder={t("max_placeholder")}*/}
+              {/*      className="border p-3 rounded-xl bg-white text-sm"*/}
+              {/*    />*/}
+              {/*  </div>*/}
+
+              {/*  <div className="flex gap-2 sm:flex-row flex-col items-center mt-2 md:mt-0">*/}
+              {/*    <button*/}
+              {/*      onClick={() => {*/}
+              {/*        try {*/}
+              {/*          const params = new URLSearchParams();*/}
+              {/*          if (searchLocation)*/}
+              {/*            params.set("address", searchLocation);*/}
+              {/*          if (minPrice !== "" && minPrice != null)*/}
+              {/*            params.set("min_price", String(minPrice));*/}
+              {/*          if (maxPrice !== "" && maxPrice != null)*/}
+              {/*            params.set("max_price", String(maxPrice));*/}
+              {/*          params.set("show", "second");*/}
+              {/*          window.history.replaceState(*/}
+              {/*            {},*/}
+              {/*            "",*/}
+              {/*            `/browse?${params.toString()}`*/}
+              {/*          );*/}
+              {/*        } catch (e) {}*/}
+              {/*        fetchCars();*/}
+              {/*      }}*/}
+              {/*      className="rounded-xl sm:flex-1 w-full bg-white hover:bg-gray-200 text-black text-base h-12 md:h-full"*/}
+              {/*    >*/}
+              {/*      {t("find_tours")}*/}
+              {/*    </button>*/}
+
+              {/*    <button*/}
+              {/*        onClick={clearSearch}*/}
+              {/*        className="rounded-xl border sm:flex-1 w-full border-white text-white bg-transparent px-4 py-2 h-12 md:h-full"*/}
+              {/*        aria-label={t("reset_search")}*/}
+              {/*    >*/}
+              {/*      {t("reset_search")}*/}
+              {/*    </button>*/}
+              {/*  </div>*/}
+              {/*</div>*/}
               <div className="grid p-4 grid-cols-1 md:grid-cols-4 gap-4 w-full bg-primary rounded-br-xl rounded-tr-xl rounded-bl-xl">
                 <div className="flex flex-col gap-2">
                   <span className="text-white text-start text-sm">
                     {t("location")}
                   </span>
                   <input
-                    type="text"
-                    value={searchLocation}
-                    onChange={(e) => setSearchLocation(e.target.value)}
-                    placeholder={t("location")}
-                    className="border p-3 rounded-xl w-full bg-white text-sm"
+                      type="text"
+                      value={searchLocation}
+                      onChange={(e) => setSearchLocation(e.target.value)}
+                      placeholder={t("location")}
+                      className="border p-3 rounded-xl w-full bg-white text-sm"
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <span className="text-white text-start text-sm">
-                    {t("min_price_label")}
+                    {t("date")}
                   </span>
-                  <input
-                    type="number"
-                    min={0}
-                    value={minPrice}
-                    onChange={(e) =>
-                      setMinPrice(
-                        e.target.value === "" ? "" : Number(e.target.value)
-                      )
-                    }
-                    placeholder={t("min_placeholder")}
-                    className="border p-3 rounded-xl bg-white text-sm"
-                  />
+                  <div className="flex gap-2">
+                    <DateRangePicker
+                        start={searchStart || undefined}
+                        end={searchEnd || undefined}
+                        onChange={({ start, end }) => {
+                          setSearchStart(start ?? "");
+                          setSearchEnd(end ?? "");
+                        }}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex flex-col gap-2">
                   <span className="text-white text-start text-sm">
-                    {t("max_price_label")}
+                    {t("number_of_travelers")}
                   </span>
-                  <input
-                    type="number"
-                    min={0}
-                    value={maxPrice}
-                    onChange={(e) =>
-                      setMaxPrice(
-                        e.target.value === "" ? "" : Number(e.target.value)
-                      )
-                    }
-                    placeholder={t("max_placeholder")}
-                    className="border p-3 rounded-xl bg-white text-sm"
+                  <PeopleDropdown
+                      adults={Number(searchPeople) || 0}
+                      children={searchChildren}
+                      onChange={({ adults, children }) => {
+                        setSearchPeople(adults);
+                        setSearchChildren(children);
+                      }}
                   />
                 </div>
 
                 <div className="flex gap-2 sm:flex-row flex-col items-center mt-2 md:mt-0">
-                  <button
-                    onClick={() => {
-                      try {
-                        const params = new URLSearchParams();
-                        if (searchLocation)
-                          params.set("address", searchLocation);
-                        if (minPrice !== "" && minPrice != null)
-                          params.set("min_price", String(minPrice));
-                        if (maxPrice !== "" && maxPrice != null)
-                          params.set("max_price", String(maxPrice));
-                        params.set("show", "second");
-                        window.history.replaceState(
-                          {},
-                          "",
-                          `/browse?${params.toString()}`
-                        );
-                      } catch (e) {}
-                      fetchCars();
-                    }}
-                    className="rounded-xl sm:flex-1 w-full bg-white hover:bg-gray-200 text-black text-base h-12 md:h-full"
+                  <Button
+                      className="rounded-xl sm:flex-1 w-full bg-white hover:bg-gray-200 text-black text-base h-12 md:h-full"
                   >
                     {t("find_tours")}
-                  </button>
+                  </Button>
 
                   <button
                       onClick={clearSearch}
@@ -522,6 +582,7 @@ const Page = () => {
                   </button>
                 </div>
               </div>
+
             </TabsContent>
           </CustomTabs>
         </div>

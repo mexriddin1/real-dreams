@@ -173,30 +173,46 @@ const Page = () => {
               />
             </TabsContent>
             <TabsContent value="second">
+              {/*<SearchForm*/}
+              {/*  variant="cars"*/}
+              {/*  searchLocation={searchLocation}*/}
+              {/*  setSearchLocation={setSearchLocation}*/}
+              {/*  minPrice={minPrice}*/}
+              {/*  setMinPrice={setMinPrice}*/}
+              {/*  maxPrice={maxPrice}*/}
+              {/*  setMaxPrice={setMaxPrice}*/}
+              {/*  onFind={() => {*/}
+              {/*    const params = new URLSearchParams();*/}
+              {/*    if (searchLocation) params.set("address", searchLocation);*/}
+              {/*    if (minPrice !== "" && minPrice != null)*/}
+              {/*      params.set("min_price", String(minPrice));*/}
+              {/*    if (maxPrice !== "" && maxPrice != null)*/}
+              {/*      params.set("max_price", String(maxPrice));*/}
+              {/*    params.set("show", "second");*/}
+              {/*    router.push(`/browse?${params.toString()}`);*/}
+              {/*  }}*/}
+              {/*  setSearchStart={function (v: string): void {*/}
+              {/*    throw new Error("Function not implemented.");*/}
+              {/*  }}*/}
+              {/*  setSearchEnd={function (v: string): void {*/}
+              {/*    throw new Error("Function not implemented.");*/}
+              {/*  }}*/}
+              {/*/>*/}
               <SearchForm
-                variant="cars"
-                searchLocation={searchLocation}
-                setSearchLocation={setSearchLocation}
-                minPrice={minPrice}
-                setMinPrice={setMinPrice}
-                maxPrice={maxPrice}
-                setMaxPrice={setMaxPrice}
-                onFind={() => {
-                  const params = new URLSearchParams();
-                  if (searchLocation) params.set("address", searchLocation);
-                  if (minPrice !== "" && minPrice != null)
-                    params.set("min_price", String(minPrice));
-                  if (maxPrice !== "" && maxPrice != null)
-                    params.set("max_price", String(maxPrice));
-                  params.set("show", "second");
-                  router.push(`/browse?${params.toString()}`);
-                }}
-                setSearchStart={function (v: string): void {
-                  throw new Error("Function not implemented.");
-                }}
-                setSearchEnd={function (v: string): void {
-                  throw new Error("Function not implemented.");
-                }}
+                  variant="cars"
+                  searchLocation={searchLocation}
+                  setSearchLocation={setSearchLocation}
+                  searchStart={searchStart}
+                  setSearchStart={setSearchStart}
+                  searchEnd={searchEnd}
+                  setSearchEnd={setSearchEnd}
+                  searchPeople={searchPeople}
+                  setSearchPeople={setSearchPeople}
+                  searchChildren={searchChildren}
+                  setSearchChildren={setSearchChildren}
+                  onFind={() => {
+
+                  }}
               />
             </TabsContent>
           </CustomTabs>
