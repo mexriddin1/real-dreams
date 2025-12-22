@@ -67,23 +67,23 @@ export const Header = ({logoUrl}: { logoUrl?: string }) => {
                     <span className="font-medium hover:underline text-sm sm:text-xl">РУ</span>
                 </button>
 
-                {/*<button*/}
-                {/*  onClick={() => setLang("en")}*/}
-                {/*  className={`flex gap-1 sm:gap-2 items-center ${*/}
-                {/*    lang === "en" ? "text-blue-600 font-semibold" : "text-gray-700"*/}
-                {/*  }`}*/}
-                {/*>*/}
-                {/*  /!* eslint-disable-next-line @next/next/no-img-element *!/*/}
-                {/*  <img*/}
-                {/*    src="https://flagsapi.com/GB/shiny/64.png"*/}
-                {/*    style={{*/}
-                {/*      height: "20px",*/}
-                {/*      width: "auto",*/}
-                {/*    }}*/}
-                {/*    alt="En"*/}
-                {/*  />*/}
-                {/*  <span className="font-medium text-sm sm:text-xl">En</span>*/}
-                {/*</button>*/}
+                <button
+                  onClick={() => setLang("en")}
+                  className={`flex gap-1 sm:gap-2 items-center ${
+                      lang === "en" ? "underline font-semibold" : "text-gray-700"
+                  }`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://flagsapi.com/GB/shiny/64.png"
+                    style={{
+                      height: "20px",
+                      width: "auto",
+                    }}
+                    alt="En"
+                  />
+                  <span className="font-medium text-sm sm:text-xl">En</span>
+                </button>
             </div>
         </div>
     );
