@@ -7,6 +7,7 @@ import {useGlobalContext} from "@/context";
 import {Button} from "@/components/ui/button";
 import {createBooking as createCarBooking} from "@/network/api/car";
 import {Users, Briefcase, RotateCw} from "lucide-react";
+import PeopleDropdown from "@/components/ui/people-dropdown";
 
 type Props = {
     id?: number;
@@ -148,7 +149,7 @@ export default function CarCard(props: Props) {
                                 {description}
                             </p>
                         )}</>
-                ) :  <h3 className="text-xl sm:text-2xl font-medium text-primary">
+                ) : <h3 className="text-xl sm:text-2xl font-medium text-primary">
                     {price}$/{t("per_person")}
                 </h3>}
 
@@ -239,14 +240,11 @@ export default function CarCard(props: Props) {
                                     }
                                 />
                             </div>
-                            <input
-                                type="number"
-                                min={1}
-                                className="border p-2 rounded"
-                                value={form.people}
-                                onChange={(e) =>
-                                    setForm((s) => ({...s, people: Number(e.target.value)}))
-                                }
+                            <PeopleDropdown
+                                adults={Number(form.people) || 0}
+                                onChange={({adults, children}) => {
+                                    setForm((s) => ({...s, people: Number(adults)}))
+                                }}
                             />
                         </div>
 
