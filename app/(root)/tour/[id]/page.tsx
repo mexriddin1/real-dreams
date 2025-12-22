@@ -146,7 +146,7 @@ export default function TourPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
             {/* Gallery */}
-            <div className="flex sm:flex-row flex-col sm:max-h-[382px] h-[100vh] gap-2 mb-6">
+            <div className="flex sm:flex-row flex-col sm:max-h-[382px] h-[650px] gap-2 mb-6">
               <div className="flex-col flex-3 row-span-2 relative h-96 rounded-md overflow-hidden">
                 <Image
                   src={tour.images?.[0]?.image_url || "/mock-img.png"}
@@ -239,7 +239,7 @@ export default function TourPage() {
                       {t("price_notes")}
                     </h3>
                     <p className="text-gray-500">
-                      {t("price_notes")}, {t("booking_email")}:{" "}
+                      {t("price_notes")}:
                       {
                         <span className="font-bold text-primary">
                           {t("booking_email")}

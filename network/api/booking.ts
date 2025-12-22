@@ -2,14 +2,16 @@ import {ApiResponse} from '../model';
 import axios from "axios";
 import {Booking} from "@/network/model/booking";
 
-// const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://185.191.141.85:8080";
+
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://api.realdreamsuz.com";
+
 
 export const createBooking = async (model: Booking): Promise<boolean> => {
     try {
         console.log("model:", model);
 
         const {data} = await axios.post<ApiResponse<string>>(
-            `/bookings`,
+            `${BASE_URL}/bookings`,
             model,
             {
                 validateStatus: () => true,

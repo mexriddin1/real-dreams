@@ -1,12 +1,12 @@
 import { Tour, PaginatedData, ApiResponse } from '../model';
 import axios from "axios";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://185.191.141.85:8080";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://api.realdreamsuz.com";
 
 export const galAllTours = async (page = 1, page_size = 10): Promise<PaginatedData<Tour> | null> => {
     try {
         const { data } = await axios.get<ApiResponse<PaginatedData<Tour>>>(
-            `/tours?page=${page}&page_size=${page_size}`,
+            `${BASE_URL}/tours?page=${page}&page_size=${page_size}`,
             {
                 validateStatus: () => true,
                 headers: {
@@ -26,7 +26,7 @@ export const galAllTours = async (page = 1, page_size = 10): Promise<PaginatedDa
 export const findById = async (id: number): Promise<ApiResponse<Tour>> => {
     try {
         const { data } = await axios.get<ApiResponse<Tour>>(
-            `/api/tours/${id}`,
+            `${BASE_URL}/tours/${id}`,
             {
                 validateStatus: () => true,
                 headers: {
@@ -46,7 +46,7 @@ export const findById = async (id: number): Promise<ApiResponse<Tour>> => {
 export const getTopTours = async (): Promise<Tour[]> => {
     try {
         const { data } = await axios.get<ApiResponse<Tour[]>>(
-            `/api/tours/top`,
+            `${BASE_URL}/tours/top`,
             {
                 validateStatus: () => true,
                 headers: {
@@ -72,15 +72,12 @@ export const findTours = async (params: {
     const { address, start } = params || {};
     let { end, people } = params || {};
 
-    // address and start are required
     if (!address || !start) {
         throw new Error("Missing required query parameters: address, start");
     }
 
-    // if end is not provided, default to start (single-day search)
     if (!end) end = start;
 
-    // default people to 1
     if (people == null || people === "") people = 1;
 
     try {
@@ -90,7 +87,7 @@ export const findTours = async (params: {
         qs.append("end", String(end));
         qs.append("people", String(people));
 
-        const url = `/tours/find?${qs.toString()}`;
+        const url = `${BASE_URL}/tours/find?${qs.toString()}`;
 
         const { data } = await axios.get<ApiResponse<Tour[]>>(url, {
             validateStatus: () => true,
