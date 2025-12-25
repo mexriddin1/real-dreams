@@ -19,8 +19,8 @@ const Footer = ({ logoUrl }: { logoUrl?: string }) => {
             className="object-contain"
           />
           <div>
-            <p className="text-2xl font-semibold">{t("world_travels")}</p>
-            <p className="text-2xl font-semibold">
+            <p className="text-xl font-medium">{t("world_travels")}</p>
+            <p className="text-xl font-medium">
               20.000+ {t("satisfied_customers")}
             </p>
           </div>
@@ -28,14 +28,17 @@ const Footer = ({ logoUrl }: { logoUrl?: string }) => {
 
         <div className="flex flex-col text-[#182148] underline sm:flex-row justify-center gap-6 sm:gap-16 flex-1 mt-6 lg:mt-0">
           <div className="flex flex-col gap-2 items-start">
-            <a href="#" className="text-xl  font-medium">
+            <a href="https://realdreamsuz.com/" className="text-xl font-medium">
               {t("home")}
             </a>
-            <a href="#" className="text-xl font-medium">
-              {t("destinations")}
+            <a href="https://realdreamsuz.com/about" className="text-xl font-medium">
+              {t("about_us")}
             </a>
-            <a href="#" className="text-xl font-medium">
+            <a href="https://realdreamsuz.com/blogs" className="text-xl font-medium">
               {t("articles")}
+            </a>
+             <a href="" className="text-xl font-medium">
+              {t("destinations")}
             </a>
           </div>
         </div>

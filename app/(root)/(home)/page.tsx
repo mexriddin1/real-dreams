@@ -18,6 +18,8 @@ import {
   CustomTabsTrigger,
 } from "@/components/ui/custom-tabs";
 import { PaginatedData, Tour } from "@/network/model";
+import { GalleryItem } from "@/network/model";
+import { getAllAdvantages, getAllArticles } from "@/network/api/gallery-item";
 import Footer from "@/components/shared/footer";
 import SearchForm from "@/components/shared/search-form";
 
@@ -37,6 +39,8 @@ const Page = () => {
   const [maxPrice, setMaxPrice] = useState<number | "">("");
   const [searchPeople, setSearchPeople] = useState<number | "">(2);
   const [searchChildren, setSearchChildren] = useState<number>(0);
+  const [advantages, setAdvantages] = useState<GalleryItem[]>([]);
+  const [articles, setArticles] = useState<GalleryItem[]>([]);
 
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -62,6 +66,21 @@ const Page = () => {
     };
 
     load();
+
+    // load advantages and articles
+    (async () => {
+      try {
+        const [adv, art] = await Promise.all([
+          getAllAdvantages(),
+          getAllArticles(),
+        ]);
+        if (!mounted) return;
+        setAdvantages(adv ?? []);
+        setArticles(art ?? []);
+      } catch (e) {
+        console.error("Failed to load gallery items", e);
+      }
+    })();
 
     try {
       if (typeof window !== "undefined") {
@@ -113,7 +132,7 @@ const Page = () => {
     <>
       {/* HERO SECTION */}
       <div className="lg:min-h-[100vh] sm:min-h-[80vh] flex flex-col">
-        <Header logoUrl={"../logo.png"} />
+        <Header logoUrl={"/logo.png"} />
 
         <div
           className="flex-1 justify-between flex flex-col px-4 sm:px-30 py-10 sm:py-20"
@@ -173,46 +192,19 @@ const Page = () => {
               />
             </TabsContent>
             <TabsContent value="second">
-              {/*<SearchForm*/}
-              {/*  variant="cars"*/}
-              {/*  searchLocation={searchLocation}*/}
-              {/*  setSearchLocation={setSearchLocation}*/}
-              {/*  minPrice={minPrice}*/}
-              {/*  setMinPrice={setMinPrice}*/}
-              {/*  maxPrice={maxPrice}*/}
-              {/*  setMaxPrice={setMaxPrice}*/}
-              {/*  onFind={() => {*/}
-              {/*    const params = new URLSearchParams();*/}
-              {/*    if (searchLocation) params.set("address", searchLocation);*/}
-              {/*    if (minPrice !== "" && minPrice != null)*/}
-              {/*      params.set("min_price", String(minPrice));*/}
-              {/*    if (maxPrice !== "" && maxPrice != null)*/}
-              {/*      params.set("max_price", String(maxPrice));*/}
-              {/*    params.set("show", "second");*/}
-              {/*    router.push(`/browse?${params.toString()}`);*/}
-              {/*  }}*/}
-              {/*  setSearchStart={function (v: string): void {*/}
-              {/*    throw new Error("Function not implemented.");*/}
-              {/*  }}*/}
-              {/*  setSearchEnd={function (v: string): void {*/}
-              {/*    throw new Error("Function not implemented.");*/}
-              {/*  }}*/}
-              {/*/>*/}
               <SearchForm
-                  variant="tours"
-                  searchLocation={searchLocation}
-                  setSearchLocation={setSearchLocation}
-                  searchStart={searchStart}
-                  setSearchStart={setSearchStart}
-                  searchEnd={searchEnd}
-                  setSearchEnd={setSearchEnd}
-                  searchPeople={searchPeople}
-                  setSearchPeople={setSearchPeople}
-                  searchChildren={searchChildren}
-                  setSearchChildren={setSearchChildren}
-                  onFind={() => {
-
-                  }}
+                variant="tours"
+                searchLocation={searchLocation}
+                setSearchLocation={setSearchLocation}
+                searchStart={searchStart}
+                setSearchStart={setSearchStart}
+                searchEnd={searchEnd}
+                setSearchEnd={setSearchEnd}
+                searchPeople={searchPeople}
+                setSearchPeople={setSearchPeople}
+                searchChildren={searchChildren}
+                setSearchChildren={setSearchChildren}
+                onFind={() => {}}
               />
             </TabsContent>
           </CustomTabs>
@@ -221,7 +213,9 @@ const Page = () => {
 
       {/* NUMBERS SECTION */}
       <div className="bg-primary py-10 sm:py-14 text-white flex flex-col px-4 sm:px-30 gap-6 sm:gap-10">
-        <h2 className="text-4xl font-semibold">{t("our_results_in_numbers")}</h2>
+        <h2 className="text-4xl font-semibold">
+          {t("our_results_in_numbers")}
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="flex flex-col gap-2">
@@ -398,31 +392,33 @@ const Page = () => {
 
         {/* Cards are a column on mobile, 2-col on md, 3-col on lg */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-          {[1, 2, 3].map((item) => (
-            <div
-              key={item}
-              className="relative bg-primary/20 border border-gray-300 flex flex-col gap-2 p-4 w-full rounded-2xl overflow-hidden"
-            >
-              <span className="text-lg sm:text-xl font-semibold">
-                Туркия — Европа ва Осиёнинг кесишган нуқтаси
-              </span>
-              <span className="text-xs sm:text-sm font-normal">
-                Istanbulning tarixiy ko‘chalaridan tortib, Antalyadagi
-                plyajlargacha —Turkiyada har kim o‘ziga mos sayohat topadi.Qulay
-                narxlar, vizasiz kirish, to‘liq xizmat paketi Real Dreams’da.
-              </span>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/transport.png"
-                alt="Transport"
-                style={{
-                  height: "200px",
-                  paddingBottom: "10px",
-                }}
-                className="rounded-xl object-cover"
-              />
-            </div>
-          ))}
+          {(advantages.length ? advantages : [1, 2, 3]).map((item, idx) => {
+            const g = (advantages.length && advantages[idx]) as
+              | GalleryItem
+              | undefined;
+            return (
+              <div
+                key={g?.id ?? idx}
+                className="relative bg-primary/20 border border-gray-300 flex flex-col gap-2 p-4 w-full rounded-2xl overflow-hidden"
+              >
+                <span className="text-lg sm:text-xl font-semibold">
+                  {g?.title ?? "not found"}
+                </span>
+                <span className="text-xs sm:text-sm font-normal line-clamp-2">
+                  {g?.description ?? "not found"}
+                </span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={g?.image_url ?? "/transport.png"}
+                  alt={g?.title ?? "advantage"}
+                  style={{
+                    height: "200px",
+                  }}
+                  className="rounded-xl object-cover"
+                />
+              </div>
+            );
+          })}
         </div>
         <div className="flex justify-center w-full">
           <Button
@@ -443,38 +439,40 @@ const Page = () => {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-          {[1, 2, 3].map((item) => (
-            <div
-              key={item}
-              className="relative border bg-white border-gray-300 flex flex-col gap-2 p-4 w-full rounded-2xl overflow-hidden"
-            >
-              <span className="text-lg sm:text-xl font-semibold">
-                Туркия — Европа ва Осиёнинг кесишган нуқтаси
-              </span>
-              <span className="text-xs sm:text-sm font-normal">
-                Istanbulning tarixiy ko‘chalaridan tortib, Antalyadagi
-                plyajlargacha —Turkiyada har kim o‘ziga mos sayohat topadi.Qulay
-                narxlar, vizasiz kirish, to‘liq xizmat paketi Real Dreams’da.
-              </span>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/transport.png"
-                alt="Transport"
-                style={{
-                  height: "200px",
-                  paddingBottom: "10px",
-                }}
-                className="rounded-xl object-cover"
-              />
-              <Button className="bg-[#F0B75A] hover:bg-[#EBA129] rounded-xl px-6 py-4 h-[82px] w-full items-center font-semibold text-2xl">
-                Maqolani o’qish
-              </Button>
-            </div>
-          ))}
+          {(articles.length ? articles : [1, 2, 3]).map((item, idx) => {
+            const a = (articles.length && articles[idx]) as
+              | GalleryItem
+              | undefined;
+            return (
+              <div
+                key={a?.id ?? idx}
+                className="relative border bg-white border-gray-300 flex flex-col gap-2 p-4 w-full rounded-2xl overflow-hidden"
+              >
+                <span className="text-lg sm:text-xl font-semibold">
+                  {a?.title ?? "not found"}
+                </span>
+                <span className="text-xs sm:text-sm font-normal line-clamp-2">
+                  {a?.description ?? "not found"}
+                </span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={a?.image_url ?? "/transport.png"}
+                  alt={a?.title ?? "article"}
+                  style={{
+                    height: "200px",
+                  }}
+                  className="rounded-xl object-cover"
+                />
+                <Button className="bg-[#F0B75A] hover:bg-[#EBA129] rounded-xl px-6 py-4 h-[82px] w-full items-center font-semibold text-2xl">
+                  {t("read_article")}
+                </Button>
+              </div>
+            );
+          })}
         </div>
       </div>
 
-      <Footer logoUrl={"logo.png"} />
+      <Footer logoUrl={"/logo.png"} />
     </>
   );
 };
